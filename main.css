@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+}
+header, h1 {
+  
+  color: coral;
+  margin: 0;
+  padding: 50px;
+  
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid grey;
+  width: 600px;
+  height: 600px;
+  flex-wrap: wrap;
+}
+
+.grid div {
+  width: 5%;
+  height: 5%;
+  border: 1px solid rgb(193, 193, 193);
+  font-size: 5px;
+}
+.player {
+  background-image: url('/images/player.jpg');
+  background-size: cover;
+}
+.blinky {
+  background-image: url('/images/blinky.png');
+  background-size: cover;
+}
+
+
+.builder {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+.builder div {
+  border: 1px solid rgb(193, 193, 193);
+  padding: 10px;
+}
+.blank {
+  background-color: black;
+  color: aliceblue;
+  padding: 10px;
+}
+.wall{
+  background-color: darkblue;
+  color: white;
+}
+.teleport {
+  background-color: aquamarine;
+}
+.ghostDoor {
+  background-color: brown;
+}
+.food {
+  border: 15px solid black !important;
+  border-radius: 100%;
+  background-color: rgb(255, 255, 255);
+
+}
+.pill {
+  border: 5px solid black !important;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+
+}
+
+.hide {
+  display: none;
+}
+.selected {
+  border: 5px solid pink;
+}
+.levelarray{
+  max-width: 80%;
+  overflow-wrap: break-word;
+}

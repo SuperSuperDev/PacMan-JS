@@ -9,10 +9,11 @@ body {
   align-items: center;
   flex-direction: column;
   margin: 0;
+  background: linear-gradient(to top left, rgb(7, 7, 7), rgb(15, 15, 16));
 }
 header, h1 {
   
-  color: coral;
+  color: rgb(237, 203, 13);
   margin: 0;
   padding: 50px;
   
@@ -21,27 +22,25 @@ header, h1 {
 .grid {
   display: flex;
   flex-direction: row;
-  border: 1px solid grey;
+  border: 3px solid #228DFF;
   width: 600px;
   height: 600px;
   flex-wrap: wrap;
-}
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-animation: neon2 1.3s ease-in-out infinite alternate;
+  -moz-animation: neon2  1.3s ease-in-out infinite alternate;
+  animation: neon2 1.3s ease-in-out infinite alternate;
+} 
 
 .grid div {
   width: 5%;
   height: 5%;
-  border: 1px solid rgb(193, 193, 193);
+  border: 1px solid rgba(134, 127, 127, 0.036);
   font-size: 5px;
+  
 }
-.player {
-  background-image: url('/images/player.jpg');
-  background-size: cover;
-}
-.blinky {
-  background-image: url('/images/blinky.png');
-  background-size: cover;
-}
-
 
 .builder {
   width: 100%;
@@ -54,19 +53,24 @@ header, h1 {
   padding: 10px;
 }
 .blank {
-  background-color: black;
-  color: aliceblue;
+  background: linear-gradient(to top left, rgb(7, 7, 7), rgb(15, 15, 16));
+  color: rgba(240, 248, 255, 0.057);
   padding: 10px;
 }
 .wall{
-  background-color: darkblue;
-  color: white;
+  background-color: rgb(3, 3, 43);
+  color: rgba(255, 255, 255, 0.091);
+  border: 1px solid #228DFF;
+  background: linear-gradient(to top right, rgb(3, 1, 37), rgb(28, 7, 103));
+
 }
 .teleport {
-  background-color: aquamarine;
+  background: linear-gradient(to top left, rgb(10, 6, 89), rgb(11, 81, 203));
 }
 .ghostDoor {
-  background-color: brown;
+  border-top: 5px solid brown!important;
+  background: linear-gradient(to top left, rgb(7, 7, 7), rgb(15, 15, 16));
+
 }
 .food {
   border: 15px solid black !important;
@@ -90,4 +94,43 @@ header, h1 {
 .levelarray{
   max-width: 80%;
   overflow-wrap: break-word;
+}
+.player {
+  background-image: url('/images/player.jpg');
+  background-size: cover;
+}
+.blinky {
+  background-image: url('/images/blinky.png');
+  background-size: cover;
+}
+.pinky {
+  background-image: url('/images/pinky.png');
+  background-size: cover;
+}
+.funky {
+  background-image: url('/images/funky.png');
+  background-size: cover;
+}
+.kinky {
+  background-image: url('/images/kinky.png');
+  background-size: cover;
+}
+/*glow for webkit*/
+
+@keyframes neon1 {
+  from {
+    box-shadow: 0 0 10px rgb(240, 185, 7), 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
+  }
+  to {
+    box-shadow: 0 0 5px rgb(228, 164, 0), 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
+  }
+}
+
+@-webkit-keyframes neon2 {
+  from {
+    box-shadow: 0 0 15px rgb(233, 150, 7), 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228dff79;
+  }
+  to {
+    box-shadow: 0 0 5px rgba(167, 9, 9, 0.582), 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
 }

@@ -25,16 +25,16 @@ builder.addEventListener('click', (event) => {
   srcClass = event.path[0].innerHTML
 
 })
-grid.addEventListener('click', (event) => {
-  console.log(targetID = event.path[0].innerHTML)
-  console.log(targetID, srcClass, '(target, src)')
-  console.log(levels.mapClassArray[targetID])
-  levels.mapClassArray[targetID] = srcClass
-  cellsArray[targetID].classList.value = `${srcClass}`
-  const showNewLevel = document.querySelector('.levelarray')
-  showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
+// grid.addEventListener('click', (event) => {
+//   console.log(targetID = event.path[0].innerHTML)
+//   console.log(targetID, srcClass, '(target, src)')
+//   console.log(levels.mapClassArray[targetID])
+//   levels.mapClassArray[targetID] = srcClass
+//   cellsArray[targetID].classList.value = `${srcClass}`
+//   const showNewLevel = document.querySelector('.levelarray')
+//   showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
 
-})
+// })
 
 mapObjects.forEach(element => {
   const objectDiv = document.createElement('div')
@@ -159,9 +159,9 @@ function playerMakeMove() {
       checkMove('player', 'down')
     }
 
-    setTimeout(() => {
+  //  setTimeout(() => {
       makeMove('player')
-    }, 1000)
+   // }, 1000)
 
   })
 }

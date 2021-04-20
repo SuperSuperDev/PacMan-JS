@@ -8,7 +8,7 @@ const width = 21
 let currentLevel = 0
 const cellsArray = []
 const cellSize = (100 / width)
-const mapObjects = ['blank', 'wall', 'teleport', 'ghostDoor', 'food', 'pill', 'fruit']
+const mapObjects = ['blank', 'wall', 'teleport', 'ghostDoor', 'food', 'pill', 'fruit', 'ghostroom']
 
 showBuilderButton.addEventListener('click', (event) => {
   event.preventDefault()
@@ -25,16 +25,16 @@ builder.addEventListener('click', (event) => {
   srcClass = event.path[0].innerHTML
 
 })
-// grid.addEventListener('click', (event) => {
-//   console.log(targetID = event.path[0].innerHTML)
-//   console.log(targetID, srcClass, '(target, src)')
-//   console.log(levels.mapClassArray[targetID])
-//   levels.mapClassArray[targetID] = srcClass
-//   cellsArray[targetID].classList.value = `${srcClass}`
-//   const showNewLevel = document.querySelector('.levelarray')
-//   showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
+grid.addEventListener('click', (event) => {
+  console.log(targetID = event.path[0].innerHTML)
+  console.log(targetID, srcClass, '(target, src)')
+  console.log(levels.mapClassArray[targetID])
+  levels.mapClassArray[targetID] = srcClass
+  cellsArray[targetID].classList.value = `${srcClass}`
+  //const showNewLevel = document.querySelector('.levelarray')
+  //showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
 
-// })
+})
 
 mapObjects.forEach(element => {
   const objectDiv = document.createElement('div')
@@ -48,8 +48,9 @@ const levels = {
   width: [21],
   playerStartPosition: [241],
   ghostStartPosition: [157],
-  //mapClassArray: ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
-  mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
+  // mapClassArray: ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
+  // mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
+  mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'ghostroom', 'ghostroom', 'ghostroom', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
   createLevel() {
     const askWidth = prompt('How many cells wide?')
     this.levelNumber.push(this.levelNumber.length + 1)
@@ -109,7 +110,43 @@ const characters = [{
   nextCell: 157, // based on cellArray
   nextDirection: 'right',
   history: [],
-}] // TODO Add  3 more ghost characters
+}, {
+  name: 'pinky',
+  behaviour: 'basic',
+  speed: 100, // variable depending on game.mode
+  standardSpeed: 100,
+  energisedSpeed: 150,
+  currentCell: 198, // variable
+  currentDirection: 'up', // (up, down, left, right)
+  nextCell: 198, // based on cellArray
+  nextDirection: 'right',
+  history: [],
+}, {
+  name: 'funky',
+  behaviour: 'basic',
+  speed: 100, // variable depending on game.mode
+  standardSpeed: 100,
+  energisedSpeed: 150,
+  currentCell: 199, // variable
+  currentDirection: 'up', // (up, down, left, right)
+  nextCell: 157, // based on cellArray
+  nextDirection: 'right',
+  history: [],
+}, {
+  name: 'kinky',
+  behaviour: 'basic',
+  speed: 100, // variable depending on game.mode
+  standardSpeed: 100,
+  energisedSpeed: 150,
+  currentCell: 200, // variable
+  currentDirection: 'up', // (up, down, left, right)
+  nextCell: 157, // based on cellArray
+  nextDirection: 'right',
+  history: [],
+}]
+
+
+// TODO Add  3 more ghost characters
 const player = characters[0]
 let index
 let currentCell
@@ -138,9 +175,12 @@ makeMove('player')
 makeMove('blinky')
 
 
+setInterval(() => {
+  playerMakeMove()
+  ghostMakeMove()
+}, 500)
 
-playerMakeMove()
-ghostMakeMove()
+
 function playerMakeMove() {
 
   // * Player Controller
@@ -159,9 +199,9 @@ function playerMakeMove() {
       checkMove('player', 'down')
     }
 
-  //  setTimeout(() => {
-      makeMove('player')
-   // }, 1000)
+
+    makeMove('player')
+
 
   })
 }
@@ -249,7 +289,9 @@ function ghostMakeMove() {
     directions.forEach((direction) => {
       if (cellsArray[direction].classList.contains('wall') === false && history.includes(direction) === false) {
         possibleMoves.push(Number(direction))
-        console.log(possibleMoves)
+        // console.log(possibleMoves, characterName + '(character)')
+      } else if (cellsArray[direction].classList.contains('wall') === false && cellsArray[currentCell].classList.contains('ghostroom')){
+        possibleMoves.push(Number(direction))
       }
     })
     characters[index].nextCell = possibleMoves[Math.floor(Math.random() * possibleMoves.length)]

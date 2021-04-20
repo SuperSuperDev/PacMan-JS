@@ -32,12 +32,16 @@ function setState(newState) {
     state = newState
     livesLeft -= 1
     if (livesLeft <= 0) {
+      console.log(Date.now(), `You have ${livesLeft} lives left. your game is over!`)
       return gameOver()
     } else {
       setTimeout(() => {
+        console.log(Date.now(), `You have ${livesLeft} lives left. Resetting characters!`)
         resetCharacters()
       }, 3000)
       setTimeout(() => {
+        console.log(Date.now(), `You have ${livesLeft} lives left. Setting game back to running!`)
+
         return state = 'running'
       }, 5000)
 
@@ -275,10 +279,16 @@ makeMove('kinky')
 ghostMakeMove()
 
 function evaluateScore() {
-  if (cellsArray[characters[0].currentCell].classList.contains('ghost') === true) {
-    console.log('you got SPOOKED!')
+  if (cellsArray[characters[0].currentCell].classList.contains('ghost') === true && state === 'running') {
+    console.log('you got SPOOKED!', cellsArray[characters[0].currentCell])
+    console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
+
     setState('lifeLost')
+    console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
+
   } else {
+    console.log(Date.now(), `You have ${livesLeft} lives left. your game is over!`)
+
     console.log('PHEEW', livesLeft, cellsArray[characters[0].currentCell])
   }
 }
@@ -368,7 +378,7 @@ function getIndex(characterName) {
 // }, 500)
 setInterval(() => {
   ghostMakeMove()
-}, 300)
+}, 100)
 function ghostMakeMove() {
   for (let index = 1; index < characters.length; index++) {
     const characterName = characters[index].name

@@ -1,7 +1,86 @@
 // first I selct the html element (grid) that I want to add innerHTML, define width and insert div for each grid width ** 2
+
+let state = 'newGame'// newGame, newLevel, stopped, running, paused, gameOver, life
+let nextState = 'running'
+let stateStart = ''
+let gameStart = ''
+let mode = 'standard' // standard, energ
+let modeStartTime = ''
+let totalScore = 0
+let thisLevelScore = 0
+let livesLeft = 4
+
+function setState(newState) {
+  if ((newState === 'newGame' || state === '')) {
+    gameStart = Date.now()
+    thisLevelScore = 0
+    totalScore = 0
+    stateStart = Date.now()
+    nextState = 'running'
+    livesLeft = 4
+    gameBtn.innerHTML = 'Start New Game'
+    state = newState
+  } else if (newState === 'running') {
+    nextState = 'paused'
+    gameBtn.innerHTML = 'Pause'
+    state = newState
+  } else if (newState === 'paused') {
+    nextState = 'running'
+    gameBtn.innerHTML = 'Resume'
+    state = newState
+  } else if (newState === 'lifeLost') {
+    state = newState
+    livesLeft -= 1
+    if (livesLeft <= 0) {
+      return gameOver()
+    } else {
+      setTimeout(() => {
+        resetCharacters()
+      }, 3000)
+      setTimeout(() => {
+        return state = 'running'
+      }, 5000)
+
+
+      // for (let index = 0; index < characters.length; index++) {
+      //   cellsArray[characters[index].currentCell].classList.remove(characters[index].name)
+      //   characters[index].history = []
+      //   characters[index].currentCell = characters[index].startCell
+      //   characters[index].nextCell = characters[index].startCell
+      //   makeMove(characters[index].name)
+    }
+
+  }
+  console.log(livesLeft)
+}
+
+function gameOver() {
+  return console.log('GAME OVER', livesLeft)
+
+}
+function setMode(newMode) {
+  mode = newMode
+  modeStartTime = Date.now()
+}
+function resetCharacters() {
+  for (let index = 0; index < characters.length; index++) {
+    cellsArray[characters[index].currentCell].classList.remove(characters[index].name)
+    cellsArray[characters[index].currentCell].classList.remove(characters[index].type)
+    characters[index].history = []
+    characters[index].currentCell = characters[index].startCell
+    characters[index].nextCell = characters[index].startCell
+    makeMove(characters[index].name)
+  }
+}
+
+const gameBtn = document.getElementById('gamebtn')
+gameBtn.addEventListener('click', function () {
+  setState(nextState)
+})
+
+setState('newGame')
 const grid = document.querySelector('div.grid')
 const builder = document.querySelector('div.builder')
-const loadLevelBtn = document.querySelector('button#load-level')
 const showBuilderButton = document.querySelector('button#show-builder')
 const addLevelButton = document.querySelector('button.addlevel')
 const width = 21
@@ -35,6 +114,7 @@ grid.addEventListener('click', (event) => {
   //showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
 
 })
+
 
 mapObjects.forEach(element => {
   const objectDiv = document.createElement('div')
@@ -90,63 +170,74 @@ for (let index = 0; index < width ** 2; index++) {
 // * Characters
 const characters = [{
   name: 'player',
+  type: 'player',
   behaviour: 'manual',
   lives: 4,
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 200,
+  startCell: 241,
   currentCell: 241, // variable
   currentDirection: 'up', // (up, down, left, right)
   nextCell: 241, // based on cellArray
   nextDirection: 'right',
 }, {
   name: 'blinky',
+  type: 'ghost',
   behaviour: 'basic',
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  startCell: 157,
   currentCell: 157, // variable
   currentDirection: 'up', // (up, down, left, right)
   nextCell: 157, // based on cellArray
   nextDirection: 'right',
+  straightMoves: 2,
   history: [],
 }, {
   name: 'pinky',
+  type: 'ghost',
   behaviour: 'basic',
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  startCell: 198,
   currentCell: 198, // variable
   currentDirection: 'up', // (up, down, left, right)
   nextCell: 198, // based on cellArray
   nextDirection: 'right',
+  straightMoves: 5,
   history: [],
 }, {
   name: 'funky',
+  type: 'ghost',
   behaviour: 'basic',
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  startCell: 199,
   currentCell: 199, // variable
   currentDirection: 'up', // (up, down, left, right)
-  nextCell: 157, // based on cellArray
+  nextCell: 199, // based on cellArray
   nextDirection: 'right',
+  straightMoves: 10,
   history: [],
 }, {
   name: 'kinky',
+  type: 'ghost',
   behaviour: 'basic',
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  startCell: 200,
   currentCell: 200, // variable
   currentDirection: 'up', // (up, down, left, right)
-  nextCell: 157, // based on cellArray
+  nextCell: 200, // based on cellArray
   nextDirection: 'right',
+  straightMoves: 15,
   history: [],
 }]
-
-
-// TODO Add  3 more ghost characters
 const player = characters[0]
 let index
 let currentCell
@@ -164,22 +255,42 @@ function makeMove(characterName) {
   } else {
     // remove character from currentCell
     cellsArray[characters[index].currentCell].classList.remove(characters[index].name)
+    cellsArray[characters[index].currentCell].classList.remove(characters[index].type)
     // add character to nextCell
     cellsArray[characters[index].nextCell].classList.add(characters[index].name)
+    cellsArray[characters[index].nextCell].classList.add(characters[index].type)
     // update currentCell
     characters[index].currentCell = characters[index].nextCell
     characters[index].currentDirection = characters[index].nextDirection
+    evaluateScore()
   }
 }
 makeMove('player')
 makeMove('blinky')
+makeMove('pinky')
+makeMove('funky')
+makeMove('kinky')
 
 
-setInterval(() => {
-  playerMakeMove()
-  ghostMakeMove()
-}, 500)
+ghostMakeMove()
 
+function evaluateScore() {
+  if (cellsArray[characters[0].currentCell].classList.contains('ghost') === true) {
+    console.log('you got SPOOKED!')
+    setState('lifeLost')
+  } else {
+    console.log('PHEEW', livesLeft, cellsArray[characters[0].currentCell])
+  }
+}
+
+// ! as it is, the playerMakeMove function is unpredictable as it sends multiple key presses, even with the event
+// ! being stored in a let variable
+// const controller = {
+//   ArrowUp: { pressed: false, func: player1.movePaddleUp }, //up
+//   ArrowDown: { pressed: false, func: player1.movePaddleDown }, //ArrowDown
+//   ArrowLeft: { pressed: false, func: player2.movePaddleUp },
+//   ArrowRight: { pressed: false, func: player2.movePaddleDown },
+// }
 
 function playerMakeMove() {
 
@@ -189,22 +300,34 @@ function playerMakeMove() {
     // ? Listen for key press
     const key = event.key
     event.preventDefault()
+    let keyPressed
     if (key === 'ArrowLeft') {
-      checkMove('player', 'left')
+      keyPressed = 'left'
+      //  checkMove('player', 'left')
     } else if (key === 'ArrowRight') {
-      checkMove('player', 'right')
+      keyPressed = 'right'
+      //  checkMove('player', 'right')
     } else if (key === 'ArrowUp') {
-      checkMove('player', 'up')
+      keyPressed = 'up'
+      //  checkMove('player', 'up')
     } else if (key === 'ArrowDown') {
-      checkMove('player', 'down')
+      keyPressed = 'down'
+      // checkMove('player', 'down')
     }
 
+    setInterval(() => {
+      //if (state === 'running') {
+      checkMove('player', keyPressed)
+      makeMove('player')
+      // }
+      console.log(keyPressed)
+    }, 300)
 
-    makeMove('player')
 
 
   })
 }
+playerMakeMove()
 
 function checkMove(characterName, direction) {
   getIndex(characterName)
@@ -243,15 +366,18 @@ function getIndex(characterName) {
 // setInterval(() => {
 //   console.log(JSON.stringify(characters[1]))
 // }, 500)
-
+setInterval(() => {
+  ghostMakeMove()
+}, 300)
 function ghostMakeMove() {
   for (let index = 1; index < characters.length; index++) {
     const characterName = characters[index].name
     const currentCell = characters[index].currentCell
+    const straightMoves = characters[index].straightMoves
     const possibleMoves = []
     const directions = []
     const history = []
-    for (let i = (characters[index].history.length - 10); i < (characters[index].history.length - 1); i++) {
+    for (let i = (characters[index].history.length - straightMoves); i < (characters[index].history.length - 1); i++) {
       history.push(characters[index].history[i])
       //console.log(history + 'HISTORY')
     }
@@ -290,13 +416,18 @@ function ghostMakeMove() {
       if (cellsArray[direction].classList.contains('wall') === false && history.includes(direction) === false) {
         possibleMoves.push(Number(direction))
         // console.log(possibleMoves, characterName + '(character)')
-      } else if (cellsArray[direction].classList.contains('wall') === false && cellsArray[currentCell].classList.contains('ghostroom')){
+      } else if (cellsArray[direction].classList.contains('wall') === false && (cellsArray[currentCell].classList.contains('ghostroom') || cellsArray[currentCell].classList.contains('ghostDoor'))) {
         possibleMoves.push(Number(direction))
       }
     })
     characters[index].nextCell = possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
     characters[index].history.push(Number(characters[index].nextCell))
     //console.log(history + 'history2')
-    makeMove(characterName)
+    if (state === 'running') {
+
+      makeMove(characterName)
+
+    }
+
   }
 }

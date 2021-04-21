@@ -8,7 +8,14 @@ let mode = 'standard' // standard, energ
 let modeStartTime = ''
 let totalScore = 0
 let thisLevelScore = 0
-let livesLeft = 4
+let livesLeft = 40
+let foodCount = 0
+const grid = document.querySelector('div.grid')
+const builder = document.querySelector('div.builder')
+const showBuilderButton = document.querySelector('button#show-builder')
+const addLevelButton = document.querySelector('button.addlevel')
+const statusBar = document.querySelector('section#status')
+
 
 function setState(newState) {
   if ((newState === 'newGame' || state === '')) {
@@ -17,7 +24,7 @@ function setState(newState) {
     totalScore = 0
     stateStart = Date.now()
     nextState = 'running'
-    livesLeft = 4
+    livesLeft = 40
     gameBtn.innerHTML = 'Start New Game'
     state = newState
   } else if (newState === 'running') {
@@ -55,7 +62,11 @@ function setState(newState) {
     }
 
   }
-  console.log(livesLeft)
+  else if (newState === 'You Win'){
+    state = newState
+  }
+    console.log(livesLeft)
+    
 }
 
 function gameOver() {
@@ -64,8 +75,29 @@ function gameOver() {
 }
 function setMode(newMode) {
   mode = newMode
+  if (newMode === 'energised') {
+    for (let index = 1; index < characters.length; index++) {
+      characters[index].type = 'casper'
+      console.log(characters[index])
+    }
+    setTimeout(() => {
+      mode = 'standard'
+      for (let index = 1; index < characters.length; index++) {
+        characters[index].type = 'ghost'
+        console.log(characters[index])
+      }
+      cellsArray.forEach(element => {
+        element.classList.remove('casper')
+      })
+
+    }, 20000);
+  }
   modeStartTime = Date.now()
 }
+
+
+
+
 function resetCharacters() {
   for (let index = 0; index < characters.length; index++) {
     cellsArray[characters[index].currentCell].classList.remove(characters[index].name)
@@ -73,6 +105,7 @@ function resetCharacters() {
     characters[index].history = []
     characters[index].currentCell = characters[index].startCell
     characters[index].nextCell = characters[index].startCell
+    characters[index].ghostRoomEntry = 1
     makeMove(characters[index].name)
   }
 }
@@ -83,16 +116,14 @@ gameBtn.addEventListener('click', function () {
 })
 
 setState('newGame')
-const grid = document.querySelector('div.grid')
-const builder = document.querySelector('div.builder')
-const showBuilderButton = document.querySelector('button#show-builder')
-const addLevelButton = document.querySelector('button.addlevel')
+
+
 const width = 21
 let currentLevel = 0
 const cellsArray = []
 const cellSize = (100 / width)
 const mapObjects = ['blank', 'wall', 'teleport', 'ghostDoor', 'food', 'pill', 'fruit', 'ghostroom']
-
+const currentScore = document.querySelector('h2#current-score')
 showBuilderButton.addEventListener('click', (event) => {
   event.preventDefault()
   builder.classList.toggle('hide')
@@ -134,7 +165,8 @@ const levels = {
   ghostStartPosition: [157],
   // mapClassArray: ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
   // mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
-  mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'ghostroom', 'ghostroom', 'ghostroom', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
+  // mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'pill', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'pill', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'ghostroom', 'ghostroom', 'ghostroom', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'pill', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'pill', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
+  mapClassArray: ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'pill', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'pill', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'ghostDoor', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'ghostroom', 'ghostroom', 'ghostroom', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'teleport', 'teleport', 'teleport', 'teleport', 'teleport', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'wall', 'pill', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'pill', 'wall', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'blank', 'wall', 'wall', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
   createLevel() {
     const askWidth = prompt('How many cells wide?')
     this.levelNumber.push(this.levelNumber.length + 1)
@@ -168,6 +200,13 @@ for (let index = 0; index < width ** 2; index++) {
   div.style.width = `${cellSize}%`
   div.style.height = `${cellSize}%`
   div.classList.add(levels.mapClassArray[index])
+  if (div.classList.contains('blank')) {
+    div.classList.add('food')
+    foodCount++
+  }
+  if (div.classList.contains('pill')) {
+    div.classList.add('blank')
+  }
   div.setAttribute('id', index)
   cellsArray.push(div)
 }
@@ -192,6 +231,7 @@ const characters = [{
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  ghostRoomEntry: 1,
   startCell: 157,
   currentCell: 157, // variable
   currentDirection: 'up', // (up, down, left, right)
@@ -206,6 +246,7 @@ const characters = [{
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  ghostRoomEntry: 1,
   startCell: 198,
   currentCell: 198, // variable
   currentDirection: 'up', // (up, down, left, right)
@@ -220,6 +261,7 @@ const characters = [{
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  ghostRoomEntry: 1,
   startCell: 199,
   currentCell: 199, // variable
   currentDirection: 'up', // (up, down, left, right)
@@ -234,6 +276,7 @@ const characters = [{
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 150,
+  ghostRoomEntry: 1,
   startCell: 200,
   currentCell: 200, // variable
   currentDirection: 'up', // (up, down, left, right)
@@ -252,7 +295,7 @@ function makeMove(characterName) {
   //const index = characters.findIndex(character => character.name === characterName)
   getIndex(characterName)
   // check if nextCell is a wall and if so, pass the currentDirection  to checkMove function
-  if (cellsArray[characters[index].nextCell].classList.contains('wall') || cellsArray[characters[index].nextCell].classList.contains('ghostDoor') && characterName === 'player') {
+  if (cellsArray[characters[index].nextCell].classList.contains('wall') || cellsArray[characters[index].nextCell].classList.contains('ghostDoor') && cellsArray[characters[index].ghostRoomEntry] === 0) {
     characters[index].nextCell = characters[index].currentCell
     //characters[index].nextDirection = characters[index].currentDirection
 
@@ -266,7 +309,7 @@ function makeMove(characterName) {
     // update currentCell
     characters[index].currentCell = characters[index].nextCell
     characters[index].currentDirection = characters[index].nextDirection
-    evaluateScore()
+    evaluateScore(characterName)
   }
 }
 makeMove('player')
@@ -278,66 +321,124 @@ makeMove('kinky')
 
 ghostMakeMove()
 
-function evaluateScore() {
+function evaluateScore(characterName) {
+  getIndex(characterName)
   if (cellsArray[characters[0].currentCell].classList.contains('ghost') === true && state === 'running') {
-    console.log('you got SPOOKED!', cellsArray[characters[0].currentCell])
-    console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
-
+    // //console.log('you got SPOOKED!', cellsArray[characters[0].currentCell])
+    // //console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
     setState('lifeLost')
-    console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
-
-  } else {
-    console.log(Date.now(), `You have ${livesLeft} lives left. your game is over!`)
-
-    console.log('PHEEW', livesLeft, cellsArray[characters[0].currentCell])
+    // // console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
+    // 
   }
-}
+  if (cellsArray[characters[0].currentCell].classList.contains('food')) {
+    cellsArray[characters[0].currentCell].classList.remove('food')
+    foodCount--
+    thisLevelScore += 10
+    totalScore += 10
+    console.log(thisLevelScore, totalScore, foodCount)
+    currentScore.innerHTML = totalScore
+    if (foodCount <= 0)
+      setState('You Win')
 
+  }
+  if (cellsArray[characters[0].currentCell].classList.contains('pill')) {
+    cellsArray[characters[0].currentCell].classList.remove('pill')
+    console.log('You hit a pill man')
+    setMode('energised')
+  }
+  if (cellsArray[characters[index].currentCell].classList.contains('player') && cellsArray[characters[index].currentCell].classList.contains('casper') && characters[index].type === 'casper') {
+    cellsArray[characters[index].currentCell].classList.remove('casper')
+    characters[index].nextCell = characters[index].startCell
+    makeMove(characters[index].name)
+    characters[index].type = 'ghost'
+    thisLevelScore += 500
+    totalScore += 500
+
+    console.log(characters[index].name, 'this index')
+  }
+  // console.log(thisLevelScore, totalScore)
+  statusBar.innerHTML = (`<H3>${state}</H3>`)
+}
+// setMode('energised') // !
+// //console.log(Date.now(), `You have ${livesLeft} lives left. your game is over!`)
+
+// //console.log('PHEEW', livesLeft, cellsArray[characters[0].currentCell])
 // ! as it is, the playerMakeMove function is unpredictable as it sends multiple key presses, even with the event
 // ! being stored in a let variable
-// const controller = {
-//   ArrowUp: { pressed: false, func: player1.movePaddleUp }, //up
-//   ArrowDown: { pressed: false, func: player1.movePaddleDown }, //ArrowDown
-//   ArrowLeft: { pressed: false, func: player2.movePaddleUp },
-//   ArrowRight: { pressed: false, func: player2.movePaddleDown },
-// }
-
-function playerMakeMove() {
-
-  // * Player Controller
-  // ? Listen to key presses and move Player
-  document.addEventListener('keydown', (event) => {
-    // ? Listen for key press
-    const key = event.key
-    event.preventDefault()
-    let keyPressed
-    if (key === 'ArrowLeft') {
-      keyPressed = 'left'
-      //  checkMove('player', 'left')
-    } else if (key === 'ArrowRight') {
-      keyPressed = 'right'
-      //  checkMove('player', 'right')
-    } else if (key === 'ArrowUp') {
-      keyPressed = 'up'
-      //  checkMove('player', 'up')
-    } else if (key === 'ArrowDown') {
-      keyPressed = 'down'
-      // checkMove('player', 'down')
+// TODO make pplayer continue moving even after keyup if not a wall
+const controller = {
+  ArrowUp: { pressed: false, direction: 'up', func: checkMove }, //up
+  ArrowDown: { pressed: false, direction: 'down', func: checkMove }, //ArrowDown
+  ArrowLeft: { pressed: false, direction: 'left', func: checkMove },
+  ArrowRight: { pressed: false, direction: 'right', func: checkMove },
+}
+document.addEventListener('keydown', (e) => {
+  e.preventDefault()
+  if (controller[e.key]) {
+    controller[e.key].pressed = true
+  }
+  // console.log(e.key)
+  // console.log(JSON.stringify(controller))
+})
+document.addEventListener('keyup', (e) => {
+  e.preventDefault()
+  if (controller[e.key]) {
+    controller[e.key].pressed = false
+  }
+  console.log(e.key, JSON.stringify(controller))
+})
+const executeMoves = () => {
+  Object.keys(controller).forEach(key => {
+    if (controller[key].pressed) {
+      controller[key] && controller[key].func('player', controller[key].direction)//controller[key].direction
     }
-
-    setInterval(() => {
-      //if (state === 'running') {
-      checkMove('player', keyPressed)
-      makeMove('player')
-      // }
-      console.log(keyPressed)
-    }, 300)
-
-
-
   })
 }
-playerMakeMove()
+
+setInterval(() => {
+  // console.log(JSON.stringify(controller))
+  executeMoves()
+  makeMove('player')
+  if(state === 'running'){ console.log(JSON.stringify(characters))}
+  
+}, 100)
+
+// function playerMakeMove() {
+
+// // * Player Controller
+// // ? Listen to key presses and move Player
+// document.addEventListener('keydown', (event) => {
+//   // ? Listen for key press
+//   const key = event.key
+//   event.preventDefault()
+//   let keyPressed
+//   if (key === 'ArrowLeft') {
+//     keyPressed = 'left'
+//     //  checkMove('player', 'left')
+//   } else if (key === 'ArrowRight') {
+//     keyPressed = 'right'
+//     //  checkMove('player', 'right')
+//   } else if (key === 'ArrowUp') {
+//     keyPressed = 'up'
+//     //  checkMove('player', 'up')
+//   } else if (key === 'ArrowDown') {
+//     keyPressed = 'down'
+//     // checkMove('player', 'down')
+//   }
+
+//     setInterval(() => {
+//       //if (state === 'running') {
+//       checkMove('player', keyPressed)
+//       makeMove('player')
+//       // }
+//       console.log(keyPressed)
+//     }, 300)
+
+
+
+//   })
+// }
+//playerMakeMove()
 
 function checkMove(characterName, direction) {
   getIndex(characterName)
@@ -378,7 +479,7 @@ function getIndex(characterName) {
 // }, 500)
 setInterval(() => {
   ghostMakeMove()
-}, 100)
+}, 500)
 function ghostMakeMove() {
   for (let index = 1; index < characters.length; index++) {
     const characterName = characters[index].name
@@ -387,6 +488,10 @@ function ghostMakeMove() {
     const possibleMoves = []
     const directions = []
     const history = []
+    if (currentCell === 157) {
+      characters[index].ghostRoomEntry = 0
+      // console.log(characters[index].ghostRoomEntry, `${characters[index].name} HAS LOST ENTRY`)
+    }
     for (let i = (characters[index].history.length - straightMoves); i < (characters[index].history.length - 1); i++) {
       history.push(characters[index].history[i])
       //console.log(history + 'HISTORY')

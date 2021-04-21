@@ -11,14 +11,20 @@ body {
   margin: 0;
   background: linear-gradient(to top left, rgb(7, 7, 7), rgb(15, 15, 16));
 }
-header, h1 {
+header, h1, h2, section {
   
   color: rgb(237, 203, 13);
   margin: 0;
-  padding: 50px;
+  padding: 5px;
+  justify-content: center;
   
 }
-
+section#scores {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  text-align: center;
+}
 .grid {
   display: flex;
   flex-direction: row;
@@ -73,16 +79,13 @@ header, h1 {
 
 }
 .food {
-  border: 15px solid black !important;
-  border-radius: 100%;
-  background-color: rgb(255, 255, 255);
-
+  background-image: url('./images/dot.png');
+  background-size: contain;
 }
 .pill {
-  border: 5px solid black !important;
-  border-radius: 50%;
-  background-color: rgb(255, 255, 255);
-
+  
+background-image: url('./images/pill.png');
+background-size: contain;
 }
 .ghostroom {
   background: linear-gradient(to top left, rgb(24, 24, 24), rgb(15, 15, 16));
@@ -118,6 +121,10 @@ header, h1 {
 }
 .kinky {
   background-image: url('/images/kinky.png');
+  background-size: cover;
+}
+.casper {
+  background-image: url('./images/ghost-microsoft.png');
   background-size: cover;
 }
 /*glow for webkit*/

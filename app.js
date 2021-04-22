@@ -397,6 +397,7 @@ const executeMoves = () => {
 
 setInterval(() => {
   // console.log(JSON.stringify(controller))
+  if (state === 'running' || state === 'energised')
   executeMoves()
   makeMove('player')
   if(state === 'running'){ console.log(JSON.stringify(characters))}

@@ -79,7 +79,7 @@ section#scores {
 
 }
 .food {
-  background-image: url('./images/dot.png');
+  background-image: url('./images/food.png');
   background-size: contain;
 }
 .pill {
@@ -104,23 +104,23 @@ background-size: contain;
   overflow-wrap: break-word;
 }
 .player {
-  background-image: url('/images/player.jpg');
+  background-image: url('./images/player.png');
   background-size: cover;
 }
 .blinky {
-  background-image: url('/images/blinky.png');
+  background-image: url('./images/blinky.png');
   background-size: cover;
 }
 .pinky {
-  background-image: url('/images/pinky.png');
+  background-image: url('./images/pinky.png');
   background-size: cover;
 }
 .funky {
-  background-image: url('/images/funky.png');
+  background-image: url('./images/funky.png');
   background-size: cover;
 }
 .kinky {
-  background-image: url('/images/kinky.png');
+  background-image: url('./images/kinky.png');
   background-size: cover;
 }
 .casper {

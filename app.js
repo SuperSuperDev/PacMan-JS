@@ -62,11 +62,11 @@ function setState(newState) {
     }
 
   }
-  else if (newState === 'You Win'){
+  else if (newState === 'You Win') {
     state = newState
   }
-    console.log(livesLeft)
-    
+  console.log(livesLeft)
+
 }
 
 function gameOver() {
@@ -76,7 +76,15 @@ function gameOver() {
 function setMode(newMode) {
   mode = newMode
   if (newMode === 'energised') {
+    //remove all ghost classes from each cell
+
+    //  cellsArray[characters[index].currentCell].classList.remove(characters[index].type)
+
+
+
     for (let index = 1; index < characters.length; index++) {
+      cellsArray[characters[index].currentCell].classList.remove(characters[index].type)
+
       characters[index].type = 'casper'
       console.log(characters[index])
     }
@@ -295,22 +303,22 @@ function makeMove(characterName) {
   //const index = characters.findIndex(character => character.name === characterName)
   getIndex(characterName)
   // check if nextCell is a wall and if so, pass the currentDirection  to checkMove function
-  if (cellsArray[characters[index].nextCell].classList.contains('wall') || cellsArray[characters[index].nextCell].classList.contains('ghostDoor') && cellsArray[characters[index].ghostRoomEntry] === 0) {
-    characters[index].nextCell = characters[index].currentCell
-    //characters[index].nextDirection = characters[index].currentDirection
+  // if (cellsArray[characters[index].nextCell].classList.contains('wall') || cellsArray[characters[index].nextCell].classList.contains('ghostDoor') && cellsArray[characters[index].ghostRoomEntry] === 0) {
+  //   characters[index].nextCell = characters[index].currentCell
+  //   //characters[index].nextDirection = characters[index].currentDirection
 
-  } else {
-    // remove character from currentCell
-    cellsArray[characters[index].currentCell].classList.remove(characters[index].name)
-    cellsArray[characters[index].currentCell].classList.remove(characters[index].type)
-    // add character to nextCell
-    cellsArray[characters[index].nextCell].classList.add(characters[index].name)
-    cellsArray[characters[index].nextCell].classList.add(characters[index].type)
-    // update currentCell
-    characters[index].currentCell = characters[index].nextCell
-    characters[index].currentDirection = characters[index].nextDirection
-    evaluateScore(characterName)
-  }
+  // } else {
+  // remove character from currentCell
+  cellsArray[characters[index].currentCell].classList.remove(characters[index].name)
+  cellsArray[characters[index].currentCell].classList.remove(characters[index].type)
+  // add character to nextCell
+  cellsArray[characters[index].nextCell].classList.add(characters[index].name)
+  cellsArray[characters[index].nextCell].classList.add(characters[index].type)
+  // update currentCell
+  characters[index].currentCell = characters[index].nextCell
+  characters[index].currentDirection = characters[index].nextDirection
+  evaluateScore(characterName)
+  // }
 }
 makeMove('player')
 makeMove('blinky')
@@ -322,40 +330,61 @@ makeMove('kinky')
 ghostMakeMove()
 
 function evaluateScore(characterName) {
-  getIndex(characterName)
-  if (cellsArray[characters[0].currentCell].classList.contains('ghost') === true && state === 'running') {
-    // //console.log('you got SPOOKED!', cellsArray[characters[0].currentCell])
-    // //console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
-    setState('lifeLost')
-    // // console.log(Date.now(), `You have ${livesLeft} is our evaluation`, state)
-    // 
-  }
-  if (cellsArray[characters[0].currentCell].classList.contains('food')) {
-    cellsArray[characters[0].currentCell].classList.remove('food')
-    foodCount--
-    thisLevelScore += 10
-    totalScore += 10
-    console.log(thisLevelScore, totalScore, foodCount)
-    currentScore.innerHTML = totalScore
-    if (foodCount <= 0)
-      setState('You Win')
+  cellsArray.forEach(element => {
+    if (element.classList.contains('ghost') && element.classList.contains('player')) {
+      setState('lifeLost')
+    }
+    if (element.classList.contains('food') && element.classList.contains('player')) {
+      cellsArray[characters[0].currentCell].classList.remove('food')
+      foodCount--
+      thisLevelScore += 10
+      totalScore += 10
+      currentScore.innerHTML = totalScore
+      if (foodCount <= 0)
+        setState('You Win')
+    }
+    if (element.classList.contains('pill') && element.classList.contains('player')) {
+      element.classList.remove('pill')
+      setMode('energised')
+    }
+    if (!element.classList.contains('ghost') && element.classList.contains('player') && element.classList.contains('casper')) {
+      element.classList.remove('casper')
+      characters.forEach(character => {
+        if (element.classList.contains(character.name) && character.type === 'casper') {
+          character.type = 'ghost'
+          character.nextCell = character.startCell
+          makeMove(character.name)
 
-  }
-  if (cellsArray[characters[0].currentCell].classList.contains('pill')) {
-    cellsArray[characters[0].currentCell].classList.remove('pill')
-    console.log('You hit a pill man')
-    setMode('energised')
-  }
-  if (cellsArray[characters[index].currentCell].classList.contains('player') && cellsArray[characters[index].currentCell].classList.contains('casper') && characters[index].type === 'casper') {
-    cellsArray[characters[index].currentCell].classList.remove('casper')
-    characters[index].nextCell = characters[index].startCell
-    makeMove(characters[index].name)
-    characters[index].type = 'ghost'
-    thisLevelScore += 500
-    totalScore += 500
+          thisLevelScore += 500
+          totalScore += 500
+        }
+      })
+      // characters[index].nextCell = characters[index].startCell
+      // makeMove(characters[index].name)
+      // characters[index].type = 'ghost'
 
-    console.log(characters[index].name, 'this index')
-  }
+
+      // console.log(characters[index].name, 'this index')
+    }
+  })
+  // getIndex(characterName)
+
+  // if (cellsArray[characters[0].currentCell].classList.contains('pill')) {
+  //   cellsArray[characters[0].currentCell].classList.remove('pill')
+  //   console.log('You hit a pill man')
+  //   setMode('energised')
+  // }
+
+  // if (cellsArray[characters[index].currentCell].classList.contains('player') && cellsArray[characters[index].currentCell].classList.contains('casper') && characters[index].type === 'casper') {
+  //   cellsArray[characters[index].currentCell].classList.remove('casper')
+  //   characters[index].nextCell = characters[index].startCell
+  //   makeMove(characters[index].name)
+  //   characters[index].type = 'ghost'
+  //   thisLevelScore += 500
+  //   totalScore += 500
+
+  //   console.log(characters[index].name, 'this index')
+  // }
   // console.log(thisLevelScore, totalScore)
   statusBar.innerHTML = (`<H3>${state}</H3>`)
 }
@@ -367,42 +396,85 @@ function evaluateScore(characterName) {
 // ! being stored in a let variable
 // TODO make pplayer continue moving even after keyup if not a wall
 const controller = {
-  ArrowUp: { pressed: false, direction: 'up', func: checkMove }, //up
-  ArrowDown: { pressed: false, direction: 'down', func: checkMove }, //ArrowDown
-  ArrowLeft: { pressed: false, direction: 'left', func: checkMove },
-  ArrowRight: { pressed: false, direction: 'right', func: checkMove },
+  ArrowUp: { pressed: 'false', direction: 'up', func: checkMove }, //up
+  ArrowDown: { pressed: 'false', direction: 'down', func: checkMove }, //ArrowDown
+  ArrowLeft: { pressed: 'false', direction: 'left', func: checkMove },
+  ArrowRight: { pressed: 'false', direction: 'right', func: checkMove },
+
 }
+let lastPressed = ''
 document.addEventListener('keydown', (e) => {
   e.preventDefault()
   if (controller[e.key]) {
-    controller[e.key].pressed = true
+    controller[e.key].pressed = 'true'
+    lastPressed = controller[e.key].direction
+    //lastPressed = controller[e.key].direction
   }
   // console.log(e.key)
-  // console.log(JSON.stringify(controller))
+  console.log(JSON.stringify(controller))
 })
 document.addEventListener('keyup', (e) => {
   e.preventDefault()
   if (controller[e.key]) {
-    controller[e.key].pressed = false
+    controller[e.key].pressed = 'false'
   }
-  console.log(e.key, JSON.stringify(controller))
+  //console.log(e.key, JSON.stringify(controller))
 })
 const executeMoves = () => {
+  let keyNum = 0
   Object.keys(controller).forEach(key => {
-    if (controller[key].pressed) {
+    if (controller[key].pressed === 'true') {
       controller[key] && controller[key].func('player', controller[key].direction)//controller[key].direction
+      keyNum++
+
     }
   })
-}
+  if (keyNum <= 0) {
+    console.log(lastPressed)
+    checkMove('player', lastPressed)
 
+
+  }
+}
+// function checkKeys() {
+//   if (Object.keys(controller.ArrowDown[0]).indexOf('pressed') > -1) {
+//     console.log('the value ecxists')
+//   }
+// }
+let intNum = 0
 setInterval(() => {
-  // console.log(JSON.stringify(controller))
-  if (state === 'running' || state === 'energised')
-  executeMoves()
-  makeMove('player')
-  if(state === 'running'){ console.log(JSON.stringify(characters))}
-  
-}, 100)
+
+  // // checkKeys()  // console.log(JSON.stringify(controller))
+  // if (Object.keys(controller.ArrowDown.pressed).indexOf('false') > -1) {
+  //   console.log('the value ecxists')
+  // }
+  if (state === 'running' || state === 'energised' || state === 'paused') {
+    console.log('START INT', intNum);
+    executeMoves()
+    if (isWall('player') === false) {
+      console.log('executeMoves is making move to', characters[0].nextCell)
+      makeMove('player')
+    } else {
+      characters[0].nextCell = characters[0].currentCell
+      console.log('checking current direction which is:', characters[0].currentDirection)
+      checkMove('player', characters[0].currentDirection)
+      if (isWall('player') === false) {
+        console.log('Current Direction is making move to', characters[0].nextCell)
+        makeMove('player')
+      } else {
+        console.log('Changing the next to current as I can not move', characters[0].nextCell, characters[0].nextCell)
+        characters[0].nextCell = characters[0].currentCell
+      }
+
+      //if(state === 'running'){ console.log(JSON.stringify(characters))}
+
+
+    //  console.log('FINISHED', intNum)
+      intNum++
+      // }
+    }
+  }
+}, 200)
 
 // function playerMakeMove() {
 
@@ -440,10 +512,24 @@ setInterval(() => {
 //   })
 // }
 //playerMakeMove()
+function isWall(characterName) {
+  getIndex(characterName)
+  if (cellsArray[characters[index].nextCell].classList.contains('wall') === true) {
+    console.log('next cell has a wall')
+    return true
+  } else {
+    console.log('next cell has no wall')
+    return false
+  }
+
+}
 
 function checkMove(characterName, direction) {
   getIndex(characterName)
+  console.log(getIndex(characterName), 'this is the charcterindecx');
+  //console.log(direction, 'checkMoveDirection')
   const currentCell = characters[index].currentCell
+  //console.log(currentCell, "currentyCell")
   characters[index].nextDirection = direction
   if (direction === 'left') {
     if (currentCell % width === 0) {
@@ -457,6 +543,7 @@ function checkMove(characterName, direction) {
     } else {
       characters[index].nextCell += 1
     }
+    console.log(characters[index].nextCell, 'right should be nextCell')
   } else if (direction === 'up') {
     if (currentCell < width) {
       characters[index].nextCell = (currentCell + (cellsArray.length - width))
@@ -480,7 +567,9 @@ function getIndex(characterName) {
 // }, 500)
 setInterval(() => {
   ghostMakeMove()
+  console.log('GHOST MOVE');
 }, 500)
+
 function ghostMakeMove() {
   for (let index = 1; index < characters.length; index++) {
     const characterName = characters[index].name
@@ -489,6 +578,16 @@ function ghostMakeMove() {
     const possibleMoves = []
     const directions = []
     const history = []
+    // console.log(characterName)
+    // console.log(currentCell)
+    // console.log(straightMoves)
+    // console.log(possibleMoves)
+    // console.log(directions)
+    // console.log(history)
+    // let left
+    // let right
+    // let down
+    // let up
     if (currentCell === 157) {
       characters[index].ghostRoomEntry = 0
       // console.log(characters[index].ghostRoomEntry, `${characters[index].name} HAS LOST ENTRY`)
@@ -498,7 +597,7 @@ function ghostMakeMove() {
       //console.log(history + 'HISTORY')
     }
 
-    // console.log(currentCell, 'current')
+    console.log(currentCell, 'current')
     if (currentCell % width === 0) {
       left = (currentCell + (width - 1))
     } else {
@@ -538,7 +637,7 @@ function ghostMakeMove() {
     })
     characters[index].nextCell = possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
     characters[index].history.push(Number(characters[index].nextCell))
-    //console.log(history + 'history2')
+    
     if (state === 'running') {
 
       makeMove(characterName)

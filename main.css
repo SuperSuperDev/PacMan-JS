@@ -71,6 +71,7 @@ section#scores {
 
 }
 .teleport {
+  background-color: #FF1177;
   background: linear-gradient(to top left, rgb(10, 6, 89), rgb(11, 81, 203));
 }
 .ghostDoor {
@@ -104,8 +105,10 @@ background-size: contain;
   overflow-wrap: break-word;
 }
 .player {
-  background-image: url('./images/player.png');
+  background-color: transparent;
+  background-image: url('./images/player.png') !important;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 .blinky {
   background-image: url('./images/blinky.png');
@@ -124,7 +127,7 @@ background-size: contain;
   background-size: cover;
 }
 .casper {
-  background-image: url('./images/ghost-microsoft.png');
+  background-image: url('./images/casper.png');
   background-size: cover;
 }
 /*glow for webkit*/

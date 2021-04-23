@@ -40,6 +40,10 @@ function setState(newState) {
   } else if (newState === 'lifeLost') {
     state = newState
     livesLeft -= 1
+    if (livesLeft > 0) {
+      const lifeDisplay = document.querySelector('div.lifewrap')
+      lifeDisplay.removeChild(lifeDisplay.firstChild)
+    }
     if (livesLeft <= 0) {
       console.log(Date.now(), `You have ${livesLeft} lives left. your game is over!`)
       return gameOver()
@@ -234,8 +238,7 @@ for (let index = 0; index < livesLeft; index++) {
   div.setAttribute('id', 'fruit-' + index)
 
 }
-// const lifeDisplay = document.querySelector('lifewrap')
-// lifeDisplay.removeChild()
+
 // * fruits
 const fruitWrap = document.createElement('div')
 fruityLife.appendChild(fruitWrap)

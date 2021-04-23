@@ -8,13 +8,15 @@ let mode = 'standard' // standard, energ
 let modeStartTime = ''
 let totalScore = 0
 let thisLevelScore = 0
-let livesLeft = 40
+let livesLeft = 3
 let foodCount = 0
+let fruitCount = 2
 const grid = document.querySelector('div.grid')
 const builder = document.querySelector('div.builder')
 const showBuilderButton = document.querySelector('button#show-builder')
 const addLevelButton = document.querySelector('button.addlevel')
 const statusBar = document.querySelector('section#status')
+const fruityLife = document.querySelector('section.fruitylife')
 
 
 function setState(newState) {
@@ -24,7 +26,7 @@ function setState(newState) {
     totalScore = 0
     stateStart = Date.now()
     nextState = 'running'
-    livesLeft = 40
+    livesLeft = 3
     gameBtn.innerHTML = 'Start New Game'
     state = newState
   } else if (newState === 'running') {
@@ -98,7 +100,7 @@ function setMode(newMode) {
         element.classList.remove('casper')
       })
 
-    }, 20000);
+    }, 20000)
   }
   modeStartTime = Date.now()
 }
@@ -208,7 +210,7 @@ for (let index = 0; index < width ** 2; index++) {
   div.style.width = `${cellSize}%`
   div.style.height = `${cellSize}%`
   div.classList.add(levels.mapClassArray[index])
-  if (div.classList.contains('blank')) {
+  if (div.classList.contains('blank') && index !== 241) { // TODO make the index dynamic depending on the players start position
     div.classList.add('food')
     foodCount++
   }
@@ -218,12 +220,40 @@ for (let index = 0; index < width ** 2; index++) {
   div.setAttribute('id', index)
   cellsArray.push(div)
 }
+// * CReate Lives and Fruit Display
+// * Lives
+const lifewrap = document.createElement('div')
+fruityLife.appendChild(lifewrap)
+lifewrap.classList.add('lifewrap')
+for (let index = 0; index < livesLeft; index++) {
+  const div = document.createElement('div')
+  lifewrap.appendChild(div)
+  div.style.width = '40px'
+  div.style.height = '40px'
+  div.classList.add('player')
+  div.setAttribute('id', 'fruit-' + index)
+
+}
+// const lifeDisplay = document.querySelector('lifewrap')
+// lifeDisplay.removeChild()
+// * fruits
+const fruitWrap = document.createElement('div')
+fruityLife.appendChild(fruitWrap)
+fruitWrap.classList.add('fruitwrap')
+for (let index = 0; index < fruitCount; index++) {
+  const div = document.createElement('div')
+  fruitWrap.appendChild(div)
+  div.style.width = '40px'
+  div.style.height = '40px'
+  div.classList.add('fruit')
+}
+
 // * Characters
 const characters = [{
   name: 'player',
   type: 'player',
   behaviour: 'manual',
-  lives: 4,
+  lives: 3,
   speed: 100, // variable depending on game.mode
   standardSpeed: 100,
   energisedSpeed: 200,
@@ -411,7 +441,7 @@ document.addEventListener('keydown', (e) => {
     //lastPressed = controller[e.key].direction
   }
   // console.log(e.key)
-  console.log(JSON.stringify(controller))
+  //console.log(JSON.stringify(controller))
 })
 document.addEventListener('keyup', (e) => {
   e.preventDefault()
@@ -449,27 +479,27 @@ setInterval(() => {
   //   console.log('the value ecxists')
   // }
   if (state === 'running' || state === 'energised' || state === 'paused') {
-    console.log('START INT', intNum);
+    //console.log('START INT', intNum)
     executeMoves()
     if (isWall('player') === false) {
-      console.log('executeMoves is making move to', characters[0].nextCell)
+      //  console.log('executeMoves is making move to', characters[0].nextCell)
       makeMove('player')
     } else {
       characters[0].nextCell = characters[0].currentCell
-      console.log('checking current direction which is:', characters[0].currentDirection)
+      // console.log('checking current direction which is:', characters[0].currentDirection)
       checkMove('player', characters[0].currentDirection)
       if (isWall('player') === false) {
-        console.log('Current Direction is making move to', characters[0].nextCell)
+        //  console.log('Current Direction is making move to', characters[0].nextCell)
         makeMove('player')
       } else {
-        console.log('Changing the next to current as I can not move', characters[0].nextCell, characters[0].nextCell)
+        //  console.log('Changing the next to current as I can not move', characters[0].nextCell, characters[0].nextCell)
         characters[0].nextCell = characters[0].currentCell
       }
 
       //if(state === 'running'){ console.log(JSON.stringify(characters))}
 
 
-    //  console.log('FINISHED', intNum)
+      //  console.log('FINISHED', intNum)
       intNum++
       // }
     }
@@ -515,10 +545,10 @@ setInterval(() => {
 function isWall(characterName) {
   getIndex(characterName)
   if (cellsArray[characters[index].nextCell].classList.contains('wall') === true) {
-    console.log('next cell has a wall')
+    // console.log('next cell has a wall')
     return true
   } else {
-    console.log('next cell has no wall')
+    // console.log('next cell has no wall')
     return false
   }
 
@@ -526,7 +556,7 @@ function isWall(characterName) {
 
 function checkMove(characterName, direction) {
   getIndex(characterName)
-  console.log(getIndex(characterName), 'this is the charcterindecx');
+  //console.log(getIndex(characterName), 'this is the charcterindecx')
   //console.log(direction, 'checkMoveDirection')
   const currentCell = characters[index].currentCell
   //console.log(currentCell, "currentyCell")
@@ -565,10 +595,12 @@ function getIndex(characterName) {
 // setInterval(() => {
 //   console.log(JSON.stringify(characters[1]))
 // }, 500)
+// if (state === 'running') {
 setInterval(() => {
   ghostMakeMove()
-  console.log('GHOST MOVE');
+  //  console.log('GHOST MOVE')
 }, 500)
+// }
 
 function ghostMakeMove() {
   for (let index = 1; index < characters.length; index++) {
@@ -584,10 +616,10 @@ function ghostMakeMove() {
     // console.log(possibleMoves)
     // console.log(directions)
     // console.log(history)
-    // let left
-    // let right
-    // let down
-    // let up
+    let left
+    let right
+    let down
+    let up
     if (currentCell === 157) {
       characters[index].ghostRoomEntry = 0
       // console.log(characters[index].ghostRoomEntry, `${characters[index].name} HAS LOST ENTRY`)
@@ -597,7 +629,7 @@ function ghostMakeMove() {
       //console.log(history + 'HISTORY')
     }
 
-    console.log(currentCell, 'current')
+    //  console.log(currentCell, 'current')
     if (currentCell % width === 0) {
       left = (currentCell + (width - 1))
     } else {
@@ -637,7 +669,7 @@ function ghostMakeMove() {
     })
     characters[index].nextCell = possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
     characters[index].history.push(Number(characters[index].nextCell))
-    
+
     if (state === 'running') {
 
       makeMove(characterName)
@@ -646,3 +678,18 @@ function ghostMakeMove() {
 
   }
 }
+
+function findpath(ghost, player, array) {
+  const start = characters[ghost].currentCell
+  const finish = characters[player].currentCell
+  const grid = levels.mapClassArray
+
+  console.log('Ghost is at ' + start, 'Player is at ' + finish, 'We are searching: ' + grid)
+  const queue = []
+  queue.push(start)
+  const currentItem = queue[0]
+  console.log('Currently Searching: ' + currentItem)
+
+
+}
+console.log(findpath(1, 0, 0))

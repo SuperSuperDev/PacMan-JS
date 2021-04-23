@@ -19,6 +19,9 @@ header, h1, h2, section {
   justify-content: center;
   
 }
+h3 {
+  margin-top: 0px;
+}
 section#scores {
   display: flex;
   flex-direction: row;
@@ -54,6 +57,19 @@ section#scores {
   justify-content: space-evenly;
   
 }
+.fruitylife {
+  padding: 0px;
+  width: 60%;
+  display:flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.lifewrap{
+  display: flex;
+  }
+.fruitwrap{
+  display: flex;
+}
 .builder div {
   border: 1px solid rgb(193, 193, 193);
   padding: 10px;
@@ -65,7 +81,7 @@ section#scores {
 }
 .wall{
   background-color: rgb(3, 3, 43);
-  color: rgba(255, 255, 255, 0.091);
+  color: rgba(255, 255, 255, 0);
   border: 1px solid #228DFF;
   background: linear-gradient(to top right, rgb(3, 1, 37), rgb(28, 7, 103));
 
@@ -73,6 +89,8 @@ section#scores {
 .teleport {
   background-color: #FF1177;
   background: linear-gradient(to top left, rgb(10, 6, 89), rgb(11, 81, 203));
+  color: rgba(255, 255, 255, 0);
+
 }
 .ghostDoor {
   border-top: 5px solid brown!important;
@@ -87,6 +105,10 @@ section#scores {
   
 background-image: url('./images/pill.png');
 background-size: contain;
+}
+.fruit {
+  background-image: url('./images/cherry.png');
+  background-size: contain;
 }
 .ghostroom {
   background: linear-gradient(to top left, rgb(24, 24, 24), rgb(15, 15, 16));

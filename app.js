@@ -40,7 +40,7 @@ function setState(newState) {
   } else if (newState === 'lifeLost') {
     state = newState
     livesLeft -= 1
-    if (livesLeft > 0) {
+    if (livesLeft > -1) {
       const lifeDisplay = document.querySelector('div.lifewrap')
       lifeDisplay.removeChild(lifeDisplay.firstChild)
     }
@@ -76,6 +76,7 @@ function setState(newState) {
 }
 
 function gameOver() {
+  state = 'Game Over'
   return console.log('GAME OVER', livesLeft)
 
 }
@@ -521,7 +522,7 @@ setInterval(() => {
       // }
     }
   }
-}, 200)
+}, 400)
 
 // function playerMakeMove() {
 
@@ -561,7 +562,7 @@ setInterval(() => {
 //playerMakeMove()
 function isWall(characterName) {
   getIndex(characterName)
-  if (cellsArray[characters[index].nextCell].classList.contains('wall') === true) {
+  if (cellsArray[characters[index].nextCell].classList.contains('wall') === true || cellsArray[characters[index].nextCell].classList.contains('ghostDoor')) {
     // console.log('next cell has a wall')
     return true
   } else {
@@ -616,7 +617,7 @@ function getIndex(characterName) {
 setInterval(() => {
   ghostMakeMove()
   //  console.log('GHOST MOVE')
-}, 500)
+}, 600)
 // }
 
 function ghostMakeMove() {

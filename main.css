@@ -76,7 +76,7 @@ section#scores {
 }
 .blank {
   background: linear-gradient(to top left, rgb(7, 7, 7), rgb(15, 15, 16));
-  color: #f0f8ff0f;
+  color: #f0f8ff00;
   padding: 10px;
 }
 .wall{
@@ -112,7 +112,7 @@ background-size: contain;
 }
 .ghostroom {
   background: linear-gradient(to top left, rgb(24, 24, 24), rgb(15, 15, 16));
-  color: #f0f8ff0f;
+  color: #f0f8ff00;
   padding: 10px;
 }
 

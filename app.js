@@ -138,9 +138,19 @@ const cellsArray = []
 const cellSize = (100 / width)
 const mapObjects = ['blank', 'wall', 'teleport', 'ghostDoor', 'food', 'pill', 'fruit', 'ghostroom']
 const currentScore = document.querySelector('h2#current-score')
+
+let canBuild = false
 showBuilderButton.addEventListener('click', (event) => {
   event.preventDefault()
   builder.classList.toggle('hide')
+  if (canBuild === false) {
+    canBuild = true
+    startBuilder()
+  } else {
+    canBuild = false
+    startBuilder()
+  }
+
 })
 addLevelButton.addEventListener('click', (event) => {
   event.preventDefault()
@@ -148,29 +158,33 @@ addLevelButton.addEventListener('click', (event) => {
 })
 let srcClass
 let targetID
-builder.addEventListener('click', (event) => {
-  console.log(event.path[0].innerHTML)
-  srcClass = event.path[0].innerHTML
+function startBuilder() {
+  if (canBuild === true) {
+    builder.addEventListener('click', (event) => {
+      console.log(event.path[0].innerHTML)
+      srcClass = event.path[0].innerHTML
 
-})
-grid.addEventListener('click', (event) => {
-  console.log(targetID = event.path[0].innerHTML)
-  console.log(targetID, srcClass, '(target, src)')
-  console.log(levels.mapClassArray[targetID])
-  levels.mapClassArray[targetID] = srcClass
-  cellsArray[targetID].classList.value = `${srcClass}`
-  //const showNewLevel = document.querySelector('.levelarray')
-  //showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
+    })
+    grid.addEventListener('click', (event) => {
+      console.log(targetID = event.path[0].innerHTML)
+      console.log(targetID, srcClass, '(target, src)')
+      console.log(levels.mapClassArray[targetID])
+      levels.mapClassArray[targetID] = srcClass
+      cellsArray[targetID].classList.value = `${srcClass}`
+      //const showNewLevel = document.querySelector('.levelarray')
+      //showNewLevel.innerHTML = levels.mapClassArray//JSON.stringify()  
 
-})
+    })
 
 
-mapObjects.forEach(element => {
-  const objectDiv = document.createElement('div')
-  builder.appendChild(objectDiv)
-  objectDiv.innerHTML = element
-  objectDiv.classList.add(element)
-})
+    mapObjects.forEach(element => {
+      const objectDiv = document.createElement('div')
+      builder.appendChild(objectDiv)
+      objectDiv.innerHTML = element
+      objectDiv.classList.add(element)
+    })
+  }
+}
 const levels = {
   levelNumber: [1],
   levelDifficulty: [1],

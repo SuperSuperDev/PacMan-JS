@@ -98,16 +98,16 @@ section#scores {
 
 }
 .food {
-  background-image: url('./images/food.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/food.png');
   background-size: contain;
 }
 .pill {
   
-background-image: url('./images/pill.png');
+background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/pill.png');
 background-size: contain;
 }
 .fruit {
-  background-image: url('./images/cherry.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/cherry.png');
   background-size: contain;
 }
 .ghostroom {
@@ -128,28 +128,28 @@ background-size: contain;
 }
 .player {
   background-color: transparent;
-  background-image: url('./images/player.png') !important;
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/player.png') !important;
   background-size: cover;
   background-repeat: no-repeat;
 }
 .blinky {
-  background-image: url('./images/blinky.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/blinky.png');
   background-size: cover;
 }
 .pinky {
-  background-image: url('./images/pinky.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/pinky.png');
   background-size: cover;
 }
 .funky {
-  background-image: url('./images/funky.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/funky.png');
   background-size: cover;
 }
 .kinky {
-  background-image: url('./images/kinky.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/kinky.png');
   background-size: cover;
 }
 .casper {
-  background-image: url('./images/casper.png');
+  background-image: url('https://supersuperdev-pub.598753f3935548c6a1ca8f065e534ac1.s3.pub1.infomaniak.cloud/projects/pacman-js/images/casper.png');
   background-size: cover;
 }
 /*glow for webkit*/

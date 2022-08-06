@@ -12,9 +12,9 @@ let foodCount = 0
 let fruitCount = 2
 // *  Define the document querySelectors
 const grid = document.querySelector('div.grid')
-const builder = document.querySelector('div.builder')
-const showBuilderButton = document.querySelector('button#show-builder')
-const addLevelButton = document.querySelector('button.addlevel')
+// const builder = document.querySelector('div.builder')
+// const showBuilderButton = document.querySelector('button#show-builder')
+// const addLevelButton = document.querySelector('button.addlevel')
 const statusBar = document.querySelector('section#status')
 const fruityLife = document.querySelector('section.fruitylife')
 // * define what to do up change in game state
@@ -125,37 +125,37 @@ const currentScore = document.querySelector('h2#current-score')
 
 // * Map builder, for use in developement and returns an array of map objects for use in mapClassArray
 // TODO: change variable from canBuild to isBuildMode
-let canBuild = false
-showBuilderButton.addEventListener('click', (event) => {
-  event.preventDefault()
-  builder.classList.toggle('hide')
-  canBuild = canBuild === false
-  startBuilder()
-})
-addLevelButton.addEventListener('click', (event) => {
-  event.preventDefault()
-  levels.createLevel()
-})
-let srcClass
-let targetID
-function startBuilder() {
-  if (canBuild === true) {
-    builder.addEventListener('click', (event) => {
-      srcClass = event.path[0].innerHTML
-    })
-    grid.addEventListener('click', (event) => {
-      levels.mapClassArray[targetID] = srcClass
-      cellsArray[targetID].classList.value = `${srcClass}`
-    })
+// let canBuild = false
+// showBuilderButton.addEventListener('click', (event) => {
+//   event.preventDefault()
+//   builder.classList.toggle('hide')
+//   canBuild = canBuild === false
+//   startBuilder()
+// })
+// addLevelButton.addEventListener('click', (event) => {
+//   event.preventDefault()
+//   levels.createLevel()
+// })
+// let srcClass
+// let targetID
+// function startBuilder() {
+//   if (canBuild === true) {
+//     builder.addEventListener('click', (event) => {
+//       srcClass = event.path[0].innerHTML
+//     })
+//     grid.addEventListener('click', (event) => {
+//       levels.mapClassArray[targetID] = srcClass
+//       cellsArray[targetID].classList.value = `${srcClass}`
+//     })
 
-    mapObjects.forEach((element) => {
-      const objectDiv = document.createElement('div')
-      builder.appendChild(objectDiv)
-      objectDiv.innerHTML = element
-      objectDiv.classList.add(element)
-    })
-  }
-}
+//     mapObjects.forEach((element) => {
+//       const objectDiv = document.createElement('div')
+//       builder.appendChild(objectDiv)
+//       objectDiv.innerHTML = element
+//       objectDiv.classList.add(element)
+//     })
+//   }
+// }
 // * define the level layout and other level related options.
 const levels = {
   levelNumber: [1],

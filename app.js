@@ -12,9 +12,9 @@ let foodCount = 0
 let fruitCount = 2
 // *  Define the document querySelectors
 const grid = document.querySelector('div.grid')
-// const builder = document.querySelector('div.builder')
-// const showBuilderButton = document.querySelector('button#show-builder')
-// const addLevelButton = document.querySelector('button.addlevel')
+// const builder = document.querySelector('div.builder') // * used for development purposes
+// const showBuilderButton = document.querySelector('button#show-builder') // * used for development purposes
+// const addLevelButton = document.querySelector('button.addlevel') // * used for development purposes
 const statusBar = document.querySelector('section#status')
 const fruityLife = document.querySelector('section.fruitylife')
 // * define what to do up change in game state
@@ -123,8 +123,8 @@ const mapObjects = [
 ]
 const currentScore = document.querySelector('h2#current-score')
 
+/* Develeopment Only
 // * Map builder, for use in developement and returns an array of map objects for use in mapClassArray
-// TODO: change variable from canBuild to isBuildMode
 // let canBuild = false
 // showBuilderButton.addEventListener('click', (event) => {
 //   event.preventDefault()
@@ -156,6 +156,8 @@ const currentScore = document.querySelector('h2#current-score')
 //     })
 //   }
 // }
+end of development only */
+
 // * define the level layout and other level related options.
 const levels = {
   levelNumber: [1],

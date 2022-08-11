@@ -2,8 +2,6 @@
 
 # Pac Man
 
-> **Difficulty level: 2/3**
-
 ![pac-man](https://media.git.generalassemb.ly/user/15120/files/da59cd00-fec9-11e8-8c61-9724060c10c6)
 
 Pac Man is a classic arcade game from the 80s. The player aims eat all the food in a maze whilst being hunted by ghosts.
@@ -14,20 +12,20 @@ The aim is to achieve the highest score possible before being killed by the ghos
 
 ## Resources
 
-* [Pac-Man Arcade gameplay - Youtube](https://www.youtube.com/watch?v=uswzriFIf_k)
-* [Pac-Man - Wikipedia](https://en.wikipedia.org/wiki/Pac-Man)
+- [Pac-Man Arcade gameplay - Youtube](https://www.youtube.com/watch?v=uswzriFIf_k)
+- [Pac-Man - Wikipedia](https://en.wikipedia.org/wiki/Pac-Man)
 
 ## Requirements
 
-* The player should be able to clear at least one board
-* The player's score should be displayed at the end of the game
+- The player should be able to clear at least one board
+- The player's score should be displayed at the end of the game
 
 ## Suggested enhancements
 
-* Smart Ghosts
-* Responsive design
-* Each board gets more difficult
-* Persistent leaderboard using `localStorage`
+- Smart Ghosts
+- Responsive design
+- Each board gets more difficult
+- Persistent leaderboard using `localStorage`
 
 ## Challenges
 
@@ -35,10 +33,10 @@ The biggest challenge here is managing the ghost movement. With random movement,
 
 ## Tips
 
-* Make sure you spend plenty of time planning _before_ you start coding
-* Make sure you understand all of the rules of the game
-* Make a checklist of all the features you want to add to the game
-* Keep It Stupid Simple
-* Refactor your code as you go
-* Make sure you have a good idea of what your MVP is and only add extra features once you have achieved it
-* Do just enough styling to get started, then once you have your MVP polish up the styling before moving on
+- Make sure you spend plenty of time planning _before_ you start coding
+- Make sure you understand all of the rules of the game
+- Make a checklist of all the features you want to add to the game
+- Keep It Stupid Simple
+- Refactor your code as you go
+- Make sure you have a good idea of what your MVP is and only add extra features once you have achieved it
+- Do just enough styling to get started, then once you have your MVP polish up the styling before moving on
